@@ -41,3 +41,4 @@
   >npm i vue-router --save-dev    // 배포시 반영x
   ```
   - vue-router
+  - axios

@@ -5,7 +5,9 @@
             Board List:
             <div v-if="loading">Loading...</div>
             <div v-else>
-                    Api result: {{apiRes}}
+                <div v-for="board in boards" :key="board.id">
+                    {{board}}
+                </div>
             </div>
             <ul>
                 <li>
@@ -20,11 +22,13 @@
 </template>
 
 <script>
+import {board} from '../api'
+
 export default {
     data() {
         return {
             loading: false,
-            apiRes: ''
+            boards: []
         }
     },
     created() {
@@ -34,17 +38,26 @@ export default {
         fetchData() {
             this.loading = true
 
-            const req = new XMLHttpRequest()
-            req.open('GET', 'http://localhost:3000/health')
-            req.send()
-            req.addEventListener('load', () => {
-                this.loading = false
-                this.apiRes = {
-                    status: req.status,
-                    statusText: req.statusText,
-                    response: JSON.parse(req.response)
-                }
-            })
+            board.fetch()
+                .then(data => {
+                    this.boards = data
+                })
+                .finally(-=>)
+
+            /*
+            axios.get('http://localhost:3000/boards')
+                .then(res => {
+                    this.boards = res.data
+                })
+                .catch(res => {
+                    //console.log(res.response.data)
+                    // auth token이 없는 경우 401 ERROR - 로그인 페이지 리다이렉트($router객체 활용)
+                    this.$router.replace('/login')
+                })
+                .finally(() => {
+                    this.loading = false
+                })
+            */
         }
     }
 }

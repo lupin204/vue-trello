@@ -1,0 +1,131 @@
+
+- 시작하기
+  - 강의 소개
+    - fadfs
+  - 요구사항 분석1
+    - fadsfas
+  - 요구사항 분석2
+    - 
+  - 코드 스캐폴딩
+    - 
+- 2. 라우팅
+  - 라우터의 필요성
+    - 
+  - 라우터 직접 만들기
+    - 
+  - Vue-router
+    - 
+  - 라우터 인스턴스
+    - git checkout -f routing/route-instance
+  - 라우터 뷰
+    - git checkout -f routing/router-view
+  - 라우터 링크
+    - git checkout -f routing/router-link
+    - router-link는 라우터 지원 앱에서 사용자 네비게이션을 가능하게하는 컴포넌트<br>
+    https://router.vuejs.org/kr/api/#router-link
+    - Navbar.vue
+    
+  - 동적 라우트 매칭
+    - git checkout -f routing/dynamic
+    - url이 /board/123 이런식으로 게시물 링크가 올경우 동적라우팅
+    - Board.vue
+  - 중첩 라우트
+    - git checkout -f routing/nested
+    - route의 children 속성, Card.vue
+  - 데이터 불러오기
+    - git checkout -f routing/fetch
+    - route의 fetch(fetchData : user-defined-methods)
+- API 통신
+  - 백엔드 API 살펴보기
+    - 
+  - Ajax – HttpXMLRequst 객체
+    - git checkout -f api/basic
+    - vue에서 ajax 통신하는 기본 원리(이론)
+  - Axios
+    - git checkout -f api/basic
+    - vue에서 ajax 통신하는 실무(jQuery - ajax 같은것)
+  - 보드 조회 API 연동
+    - git checkout -f api/board
+    - axios (then/catch/finally)
+  - Axios 실전에서 사용하기
+    - git checkout
+    - API요청하는 url을 모듈화 - /api/index.js
+- 인증
+  - 인증 API
+    - 
+  - 네비게이션 가드
+    - 
+  - 로그인
+    - 
+  - 로그아웃
+    - 
+- 홈 화면
+  - 보드 목록 조회 화면
+    - 
+  - 보드 추가하기
+    - 
+- 상태 관리
+  - Vuex
+    - 
+  - 상태 (State)
+    - 
+  - 변이 (Mutation)
+    - 
+  - 액션 (Action)
+    - 
+  - Vuex 적용 – 보드 목록 조회
+    - 
+  - Vuex 적용 – 인증 1
+    - 
+  - Vuex 적용 – 인증 2
+    - 
+  - 스토어 개선
+    - 
+- 기본 플로우 구현
+  - 보드 조회 화면 개발 1
+    - 
+  - 보드 조회 화면 개발 2
+    - 
+  - 카드 생성 1 – 마크업
+    - 
+  - 카드 생성 2 – API 연동
+    - 
+  - 카드 상세 조회 1 – 라우팅
+    - 
+  - 카드 상세 조회 2 – API 연동
+    - 
+  - 카드 수정 – API 연동
+    - 
+  - 카드 이동 1 – 로직분석
+    - 
+  - 카드 이동 2 – 구현
+    - 
+  - 카드 이동 3 – 리팩토링
+    - 
+  - 카드 삭제
+    - 
+  - 색상 입히기
+    - 
+  - 보드 세팅
+    - 
+  - 보드 삭제
+    - 
+- 추가 요구사항 구현
+  - 나머지 요구사항 정리
+    - 
+  - 보드수정 – 색상 변경
+    - 
+  - 보드수정 – 타이틀 변경
+    - 
+  - 리스트 생성
+    - 
+  - 리스트 수정 – 타이틀 변경
+    - 
+  - 리스트 이동
+    - 
+  - 리스트 삭제
+    - 
+  - 정리
+    - 
+  - 학습완료
+    - 
