@@ -10,6 +10,16 @@
   >vue init webpack-simple vue-trello
   Use sass? No (나머지는 그냥 엔터)
   ```
+  >**`(참고) vue-cli template 종류`**<br>
+  명령어 = vue list<br>
+    <b>browserify</b> - A full-featured Browserify + vueify setup with hot-reload, linting & unit testing.<br>
+    <b>browserify-simple</b> - A simple Browserify + vueify setup for quick prototyping.<br>
+    <b>pwa</b> - PWA template for vue-cli based on the webpack template<br>
+    <b>simple</b> - The simplest possible Vue setup in a single HTML file<br>
+    <b>webpack</b> - A full-featured Webpack + vue-loader setup with hot reload, linting, testing & css extraction.<br>
+    <b>webpack-simple</b> - A simple Webpack + vue-loader setup for quick prototyping.<br>
+
+
   - 서버 구동 후 <http://localhost:8080> 에서 "Vue.js App" 확인
   ```sh
   >cd vue-trello
