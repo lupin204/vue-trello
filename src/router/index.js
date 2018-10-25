@@ -9,18 +9,41 @@ import NotFound from '../components/NotFound.vue'
 // 미들웨어 설정
 Vue.use(VueRouter)
 
+// 라우터 beforeEnter 에서 token 체크 - localStorage에 저장된 token 없으면 로그인페이지로 이동
+const requireAuth = (to, from, next) => {
+  const isAuth = localStorage.getItem('token')    // 'tokenValue' || undefined
+  const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`
+  isAuth ? next() : next(loginPath)   // if (isAuth == true) Then next() Else next(loginPath)
+}
+
 // vue-router
 const router = new VueRouter({
   mode: 'history',    // not 'hashbang mode' but 'history mode'
   routes: [
-    { path: '/', component: Home },
-    { path: '/login', component: Login },
-    { path: '/board/:bid', component: Board, children: [  // bid라는 변수
-      { path: 'card/:cid', component: Card }
-    ] },
-    { path: '*', component: NotFound }
+    {
+      path: '/',
+      component: Home,
+      beforeEnter: requireAuth
+    },
+    {
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/board/:bid',
+      component: Board,
+      beforeEnter: requireAuth,
+      children: [{  // bid라는 변수
+        path: 'card/:cid',
+        component: Card,
+        beforeEnter: requireAuth
+      }]
+    },
+    {
+      path: '*',
+      component: NotFound
+    }
   ]
 })
 
-/* router 정의 */
 export default router

@@ -48,15 +48,20 @@
     - git checkout -f api/board
     - axios (then/catch/finally)
   - Axios 실전에서 사용하기
-    - git checkout
+    - git checkout -f api/service
     - API요청하는 url을 모듈화 - /api/index.js
 - 인증
   - 인증 API
-    - 
+    - git checkout
   - 네비게이션 가드
-    - 
+    - git checkout -f auth/navigation-guard
+    - beforeEnter - /router/index.js
   - 로그인
-    - 
+    - git checkout -f/auth/login
+    - css 가져오기 (lecture-vue-trello 프로젝트)
+      - git cherry-pick 2590135         (App.vue)
+      - git cherry-pick 6a57a8f         (Login.vue)
+      
   - 로그아웃
     - 
 - 홈 화면

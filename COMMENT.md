@@ -42,3 +42,10 @@
   ```
   - vue-router
   - axios
+
+- axios
+  - axios는 CORS(Cross-Origin Resource Sharing) 에 대하여 
+  항상 request(GET/POST/PUT/DELETE) 보내기 전에 request(OPTIONS)를 먼저 보낸다 (보안때문인거같다)
+    - (관련링크) https://developer.mozilla.org/ko/docs/Web/HTTP/Access_control_CORS#%EC%82%AC%EC%A0%84_%EC%9A%94%EC%B2%AD
+  - axios는 'application/json' 사용하고, jQuery는 'application/x-www-form-urlencoded' 사용한다
+  - 'application/json' - axios 는 항상 preflighted(사전전달)을 수행한다 = request(OPTIONS)를 먼저 보낸다

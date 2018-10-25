@@ -42,7 +42,9 @@ export default {
                 .then(data => {
                     this.boards = data
                 })
-                .finally(-=>)
+                .finally(_ => {             // () => {console.log(11)}  같은 표현  _ => {console.log(11)}
+                    this.loading = false
+                })
 
             /*
             axios.get('http://localhost:3000/boards')
