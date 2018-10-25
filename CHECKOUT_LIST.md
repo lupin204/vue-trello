@@ -57,16 +57,21 @@
     - git checkout -f auth/navigation-guard
     - beforeEnter - /router/index.js
   - 로그인
-    - git checkout -f/auth/login
+    - git checkout -f auth/login
     - css 가져오기 (lecture-vue-trello 프로젝트)
       - git cherry-pick 2590135         (App.vue)
       - git cherry-pick 6a57a8f         (Login.vue)
       
   - 로그아웃
-    - 
+    - git checkout -f auth/logout
+    - css 가져오기
+      - git cherry-pick 2af7d03         (Navbar.vue)
 - 홈 화면
   - 보드 목록 조회 화면
-    - 
+    - git checkout -f 
+    - css 가져오기
+      - git cherry-pick db39ec1         (Home.vue)
+      - git cherry-pick cdb09e2
   - 보드 추가하기
     - 
 - 상태 관리
