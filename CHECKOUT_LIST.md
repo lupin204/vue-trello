@@ -68,12 +68,14 @@
       - git cherry-pick 2af7d03         (Navbar.vue)
 - 홈 화면
   - 보드 목록 조회 화면
-    - git checkout -f 
+    - git checkout -f home/board-list
     - css 가져오기
       - git cherry-pick db39ec1         (Home.vue)
-      - git cherry-pick cdb09e2
+      - git cherry-pick cdb09e2         (Home.vue)
   - 보드 추가하기
-    - 
+    - git checkout -f home/board-add
+    - css 가져오기
+      - git cherry-pick b0ba747         (AddBoard.vue)
 - 상태 관리
   - Vuex
     - 

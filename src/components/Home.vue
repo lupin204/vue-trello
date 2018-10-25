@@ -14,18 +14,26 @@
                 </a>
             </div>
         </div>
+        <!-- AddBoard.vue : close() method 실행되면 isAddBoard=false로 바꾸고, v-if에서 false니까 AddBoard는 안보임 -->
+        <!-- AddBoard.vue : submit() method 실행되면 Home.vue : onAddBoard() method가 실행된다 -->
+        <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"></AddBoard>
     </div>
 </template>
 
 <script>
 import { board } from '../api'
+import AddBoard from './AddBoard.vue'
 
 export default {
+    components: {
+        AddBoard
+    },
     data() {
         return {
             loading: false,
             boards: [],
-            error: ''
+            error: '',
+            isAddBoard: false       // AddBoard 모달창 활성화여부
         }
     },
     created() {
@@ -66,7 +74,12 @@ export default {
             */
         },
         addBoard() {
-            console.log('CALL addBoard()')
+            this.isAddBoard = true
+        },
+        onAddBoard(title) {
+            console.log(title)
+            board.create(title)
+                .then(() => this.fetchData())
         }
     }
 }
