@@ -18,24 +18,13 @@ export default {
         ...mapGetters([
             'isAuth'
         ])
-        /* // mapGetters.isAuth 로 대체
-        isAuth() {
-            return !!localStorage.getItem('token')
-        }
-        */
     },
     methods: {
         ...mapMutations([
             'LOGOUT'
         ]),
         logout() {
-            /*      // mapMutations.LOGOUT 로 대체
-            delete localStorage.token
-            this.isAuth()
-            setAuthInHeader(null)
-            */
             this.LOGOUT()
-            
             this.$router.push('/login')
         }
     }

@@ -52,19 +52,6 @@
             .catch(err => {
               this.error = err.data.error
             })
-
-          /*
-          auth.login(this.email, this.password)
-            .then(data => {
-              localStorage.setItem('token', data.accessToken)
-              setAuthInHeader(data.accessToken)
-              this.$router.push(this.rPath)
-            })
-            .catch(err => {
-              this.error = err.data.error
-            })
-          */
-
         }
       }
     }

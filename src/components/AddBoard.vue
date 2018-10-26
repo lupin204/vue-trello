@@ -8,7 +8,6 @@
         </div>
         <div slot="body">
             <form id="add-board-form" @submit.prevent="addBoard">
-                <!-- <input class="form-control" type="text" v-bind:value="input" v-on:input="input" -->
                 <input class="form-control" type="text" v-model="input" ref="input">
             </form>
         </div>
@@ -41,7 +40,6 @@ export default {
     },
     // AddBoard가 부모 Component에 mount 되었을때 발생
     mounted() {
-        // <input>태그의 ref=input 으로 정의한 값 참조
         this.$refs.input.focus()
     },
     methods: {
@@ -52,14 +50,8 @@ export default {
             'ADD_BOARD',
             'FETCH_BOARDS'
         ]),
-        /*
-        close() {
-            this.$emit('close')
-        },
-        */
         addBoard() {
-            this.SET_IS_ADD_BOARD(false)        //this.$emit('close')
-            //this.$store.dispatch('ADD_BOARD', {title: this.input})  // this.$emit('submit', this.input)
+            this.SET_IS_ADD_BOARD(false)
             this.ADD_BOARD({title: this.input}).then(_ => {
                 this.FETCH_BOARDS()
             })

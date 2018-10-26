@@ -22,11 +22,8 @@ export default {
     },
     created() {
         this.fetchData()
-        //console.log(this.$route)
-        //console.log(this.$route.params.bid)
     },
     methods: {
-        // Backend API 호출
         fetchData() {
             this.loading = true
             setTimeout(() => {

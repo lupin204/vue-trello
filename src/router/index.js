@@ -13,13 +13,7 @@ Vue.use(VueRouter)
 // 라우터 beforeEnter 에서 token 체크 - localStorage에 저장된 token 없으면 로그인페이지로 이동
 const requireAuth = (to, from, next) => {
   const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`
-
-  /* 
-  const isAuth = localStorage.getItem('token')    // 'tokenValue' || undefined
-  isAuth ? next() : next(loginPath)   // if (isAuth == true) Then next() Else next(loginPath)
-  */
- //인증관련 로직은 store에서 수행하도록 변경..
- store.getters.isAuth ? next() : next(loginPath)
+  store.getters.isAuth ? next() : next(loginPath)
 }
 
 // vue-router
@@ -39,7 +33,7 @@ const router = new VueRouter({
       path: '/board/:bid',
       component: Board,
       beforeEnter: requireAuth,
-      children: [{  // bid라는 변수
+      children: [{
         path: 'card/:cid',
         component: Card,
         beforeEnter: requireAuth
