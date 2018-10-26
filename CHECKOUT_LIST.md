@@ -90,12 +90,12 @@
     - mapActions
   - Vuex 적용 – 보드 목록 조회
     - git checkout -f home/vuex
-  - Vuex 적용 – 인증 1
-    - 
-  - Vuex 적용 – 인증 2
-    - 
+  - Vuex 적용 – 인증 1/2
+    - git checkout -f auth/vuex
   - 스토어 개선
-    - 
+    - git checkout -f vuex/refactor
+    - store를 state, getter, mutation, action 으로 분리
+    || store를 module별로 분리
 - 기본 플로우 구현
   - 보드 조회 화면 개발 1
     - 

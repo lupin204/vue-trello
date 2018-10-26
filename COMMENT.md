@@ -60,7 +60,7 @@
       'isAddBoard'
     ])
     ```
-  - 게터  -  getter  -  mapGetter
+  - 게터  -  getter  -  mapGetter  (computed와 유사한 성격)
     ```js
     computed: ...mapGetters([
       'isAddBoard'

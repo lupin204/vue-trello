@@ -25,8 +25,10 @@ const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
 }
 
+/* store 에서 수행
 const {token} = localStorage
 if (token) setAuthInHeader(token)
+*/
 
 // GET boards
 const board = {

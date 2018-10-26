@@ -21,6 +21,7 @@
 
 <script>
     import {auth, setAuthInHeader} from '../api'
+    import {mapActions} from 'vuex'
 
     export default {
       data() {
@@ -40,18 +41,30 @@
           this.rPath = this.$route.query.rPath || '/'
       },
       methods: {
+        ...mapActions([
+          'LOGIN'
+        ]),
         onSubmit() {
+          this.LOGIN({email: this.email, password: this.password})
+            .then(data => {
+              this.$router.push(this.rPath)
+            })
+            .catch(err => {
+              this.error = err.data.error
+            })
+
+          /*
           auth.login(this.email, this.password)
             .then(data => {
-              console.log(data);
               localStorage.setItem('token', data.accessToken)
               setAuthInHeader(data.accessToken)
               this.$router.push(this.rPath)
             })
             .catch(err => {
-              console.log(err);
               this.error = err.data.error
             })
+          */
+
         }
       }
     }

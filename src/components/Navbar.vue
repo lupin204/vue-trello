@@ -11,19 +11,31 @@
 </template>
 
 <script>
-import { setAuthInHeader } from '../api'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
     computed: {
+        ...mapGetters([
+            'isAuth'
+        ])
+        /* // mapGetters.isAuth 로 대체
         isAuth() {
-            return !!localStorage.getItem('token')     // !!해서 존재여부를 boolean값으로 바꿔줌
+            return !!localStorage.getItem('token')
         }
+        */
     },
     methods: {
+        ...mapMutations([
+            'LOGOUT'
+        ]),
         logout() {
+            /*      // mapMutations.LOGOUT 로 대체
             delete localStorage.token
             this.isAuth()
             setAuthInHeader(null)
+            */
+            this.LOGOUT()
+            
             this.$router.push('/login')
         }
     }
