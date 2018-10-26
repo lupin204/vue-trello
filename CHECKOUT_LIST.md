@@ -80,13 +80,16 @@
   - Vuex
     - 
   - 상태 (State)
-    - 
+    - git checkout -f vuex/state
+    - mapState, mapGetter
   - 변이 (Mutation)
-    - 
+    - git checkout -f vuex/mutation
+    - mapMutations
   - 액션 (Action)
-    - 
+    - git checkout -f vuex/action
+    - mapActions
   - Vuex 적용 – 보드 목록 조회
-    - 
+    - git checkout -f home/vuex
   - Vuex 적용 – 인증 1
     - 
   - Vuex 적용 – 인증 2

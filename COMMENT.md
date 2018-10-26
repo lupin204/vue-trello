@@ -49,3 +49,40 @@
     - (관련링크) https://developer.mozilla.org/ko/docs/Web/HTTP/Access_control_CORS#%EC%82%AC%EC%A0%84_%EC%9A%94%EC%B2%AD
   - axios는 'application/json' 사용하고, jQuery는 'application/x-www-form-urlencoded' 사용한다
   - 'application/json' - axios 는 항상 preflighted(사전전달)을 수행한다 = request(OPTIONS)를 먼저 보낸다
+
+- vuex
+  - 상태  -  state  -  mapState
+    ```js
+    // 기본컨셉
+    this.$store.state.isAddBoard
+    // vuex
+    computed: ...mapState([
+      'isAddBoard'
+    ])
+    ```
+  - 게터  -  getter  -  mapGetter
+    ```js
+    computed: ...mapGetters([
+      'isAddBoard'
+    ])
+    ```
+  - 변이  -  mutation  -  mapMutations  (동적 변이)
+    ```js
+    // 기본컨셉
+    this.$store.commit('SET_IS_ADD_BOARD', true)
+    // vuex
+    methods: ...mapMutations([
+      'SET_IS_ADD_BOARD'
+    ])
+    this.SET_IS_ADD_BOARD(false)
+    ```
+  - 액션  -  action  -  mapActionss  (비동기 로직)
+    ```js
+    // 기본컨셉
+    this.$store.dispatch('ADD_BOARD', {title: this.input})    // (action함수, {payload})
+    // vuex
+    methods: ...mapActions([
+      'ADD_BOARD'
+    ])
+    this.ADD_BOARD({title: this.input})
+    ```

@@ -4,9 +4,8 @@
             <router-link to="/">Home</router-link>
         </div>
         <div class="header-auth">
-            <a href="" v-if="isAuth" @click.prevent="logout">Logout</a>
+            <a href="" v-if="isAuth" @click="logout">Logout</a>
             <router-link v-else to="/login">Login</router-link>
-            <!-- <a>Logout</a> -->
         </div>
     </nav>
 </template>
@@ -23,6 +22,7 @@ export default {
     methods: {
         logout() {
             delete localStorage.token
+            this.isAuth()
             setAuthInHeader(null)
             this.$router.push('/login')
         }

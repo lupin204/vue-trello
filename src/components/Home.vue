@@ -2,6 +2,7 @@
     <div>
         <div class="home-title">Personal Boards</div>
         <div class="board-list" ref="boardList">
+            <!-- boards는 data()의 boards배열 -->
             <div class="board-item" v-for="board in boards" :key="board.id"
                 :data-bgcolor="board.bgColor" ref="boardItem">
                 <router-link :to="`/board/${board.id}`">
@@ -9,19 +10,20 @@
                 </router-link>
             </div>
             <div class="board-item board-item-new">
-                <a class="new-board-btn" href="" @click.prevent="addBoard">
+                <a class="new-board-btn" href="" @click.prevent="SET_IS_ADD_BOARD(true)">
                     Create new board
                 </a>
             </div>
         </div>
-        <!-- AddBoard.vue : close() method 실행되면 isAddBoard=false로 바꾸고, v-if에서 false니까 AddBoard는 안보임 -->
-        <!-- AddBoard.vue : submit() method 실행되면 Home.vue : onAddBoard() method가 실행된다 -->
-        <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"></AddBoard>
+        <!-- //AddBoard.vue : close() method 실행되면 isAddBoard=false로 바꾸고, v-if에서 false니까 AddBoard는 안보임 -->
+        <!-- //AddBoard.vue : submit() method 실행되면 Home.vue : onAddBoard() method가 실행된다 -->
+        <!-- <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"></AddBoard> -->
+        <AddBoard v-if="isAddBoard"></AddBoard>
     </div>
 </template>
 
 <script>
-import { board } from '../api'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import AddBoard from './AddBoard.vue'
 
 export default {
@@ -31,24 +33,38 @@ export default {
     data() {
         return {
             loading: false,
-            boards: [],
-            error: '',
-            isAddBoard: false       // AddBoard 모달창 활성화여부
+            error: ''
         }
+    },
+    computed: {
+        ...mapState([
+            'isAddBoard',
+            'boards'
+        ])
     },
     created() {
         this.fetchData()
     },
     updated() {
-        console.log(this.$refs.boardItem)
+        // <div class="board-item"> 의 ref=boardItem 정의된 값 참조
         this.$refs.boardItem.forEach(elem => {
             elem.style.backgroundColor = elem.dataset.bgcolor
         })
     },
     methods: {
+        ...mapMutations([
+            'SET_IS_ADD_BOARD'
+        ]),
+        ...mapActions([
+            'FETCH_BOARDS'
+        ]),
         fetchData() {
             this.loading = true
 
+            this.FETCH_BOARDS().finally(_ => {
+                this.loading = false
+            })
+            /*
             board.fetch()
                 .then(data => {
                     console.log(data.list)
@@ -57,7 +73,7 @@ export default {
                 .finally(_ => {             // () => {console.log(11)}  같은 표현  _ => {console.log(11)}
                     this.loading = false
                 })
-
+            */
             /*
             axios.get('http://localhost:3000/boards')
                 .then(res => {
@@ -73,13 +89,19 @@ export default {
                 })
             */
         },
+        /*
         addBoard() {
-            this.isAddBoard = true
+            //this.isAddBoard = true
+            this.$store.commit('SET_IS_ADD_BOARD', true)
+
         },
-        onAddBoard(title) {
-            console.log(title)
+        */
+        onAddBoard() {
+            this.fetchData()
+            /*
             board.create(title)
                 .then(() => this.fetchData())
+            */
         }
     }
 }
