@@ -52,8 +52,8 @@ export default {
         ]),
         addBoard() {
             this.SET_IS_ADD_BOARD(false)
-            this.ADD_BOARD({title: this.input}).then(_ => {
-                this.FETCH_BOARDS()
+            this.ADD_BOARD({title: this.input}).then((item) => {
+                this.$router.push(`/board/${item.id}`)
             })
         }
     }

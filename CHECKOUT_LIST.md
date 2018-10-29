@@ -94,15 +94,19 @@
     - git checkout -f auth/vuex
   - 스토어 개선
     - git checkout -f vuex/refactor
-    - store를 state, getter, mutation, action 으로 분리
-    || store를 module별로 분리
+    - store를 state, getter, mutation, action 으로 분리 (OR store를 module별로 분리)
 - 기본 플로우 구현
   - 보드 조회 화면 개발 1
-    - 
+    - git checkout -f board/query
   - 보드 조회 화면 개발 2
-    - 
+    - git checkout -f board/markup
+    - css 가져오기
+      - git cherry-pick ef62a1b         (Board.vue)
+      - git cherry-pick 73bf920         (List.vue)
   - 카드 생성 1 – 마크업
-    - 
+    - git checkout -f board/
+    - css 가져오기
+      - git cherry-pick 524594f         (AddCard.vue)
   - 카드 생성 2 – API 연동
     - 
   - 카드 상세 조회 1 – 라우팅
