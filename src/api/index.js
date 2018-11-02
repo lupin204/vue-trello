@@ -57,6 +57,10 @@ const card = {
     // Add card  /  curl -X POST localhost:3000/cards -H 'Authorization: Bearer token' -d "title=string&listId=number&pos=number"
     create(title, listId, pos) {
         return request('post', '/cards', {title, listId, pos})
+    },
+    // Edit card  /  curl -X PUT localhost:3000/cards/1 -H 'Authorization: Bearer token' -d "title=string&description=string&listId=number&pos=number"
+    update(id, payload) {
+        return request('put', `/cards/${id}`, payload)
     }
 }
 
