@@ -36,8 +36,16 @@ export default {
         onSubmit() {
             if (this.invalidInput) return
             const { inputTitle, listId } = this         // const inputTitle = this.inputTitle;  const listId = this.listId;
-            this.ADD_CARD({title: inputTitle, listId})
+            const pos = this.newCardPos()
+            this.ADD_CARD({title: inputTitle, listId, pos})
                 .finally(() => this.inputTitle = '')
+        },
+        newCardPos() {
+            const curList = this.$store.state.board.lists.filter(elem => elem.id === this.listId)[0]
+            if (!curList) return 65535
+            const { cards } = curList
+            if (!cards.length) return 65535
+            return cards[cards.length -1].pos * 2
         },
         // AddCard Component 밖 영역을 클릭하면 AddCard Component가 닫힌다 
         // --> 클릭된 e.target이 AddCard 전체영역(this.$el) 안에 포함되면(contains) 닫지않는다(just return)
