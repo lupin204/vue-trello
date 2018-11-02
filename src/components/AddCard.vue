@@ -9,7 +9,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
+    // 부모 Component로부터 listId를 받아온다
+    // List.vue(부모) 에서 AddCard Component 등록할때 listId를 v-bind로 넘긴다
+    props: ['listId'],
     data() {
         return {
             inputTitle: ''
@@ -25,8 +30,14 @@ export default {
         this.setupClickOutside(this.$el)
     },
     methods: {
+        ...mapActions([
+            'ADD_CARD'
+        ]),
         onSubmit() {
-            console.log('submit!!')
+            if (this.invalidInput) return
+            const { inputTitle, listId } = this         // const inputTitle = this.inputTitle;  const listId = this.listId;
+            this.ADD_CARD({title: inputTitle, listId})
+                .finally(() => this.inputTitle = '')
         },
         // AddCard Component 밖 영역을 클릭하면 AddCard Component가 닫힌다 
         // --> 클릭된 e.target이 AddCard 전체영역(this.$el) 안에 포함되면(contains) 닫지않는다(just return)

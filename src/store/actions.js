@@ -1,7 +1,11 @@
 import * as api from '../api'
 
+// ACTION_NAME ({context객체}, {payloads})
+// state{} 객체  -->  vuex의 state를 가져온다
+// dispatch() 함수  -->  vuex의 action 실행한다
+// commit() 함수  -->  vuex의 mutation 실행한다
 const actions = {
-    // ACTION_NAME ({context객체}, {payloads})
+    
     LOGIN ({ commit }, {email, password}) {
         return api.auth.login(email, password)
             .then(({ accessToken }) => commit('LOGIN', accessToken))
@@ -18,6 +22,10 @@ const actions = {
         return api.board.fetch(id).then(data => {
             commit('SET_BOARD', data.item)
         })
+    },
+    ADD_CARD ({ dispatch, state }, {title, listId, pos}) {
+        return api.card.create(title, listId, pos)
+            .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
     }
 
 }

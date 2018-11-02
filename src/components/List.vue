@@ -3,8 +3,11 @@
         <div class="list-header">
             <div class="list-header-title">{{data.title}}</div>
         </div>
+        <div class="card-list">
+            <CardItem v-for="card in data.cards" v-bind:key="card.id" v-bind:data="card" />
+        </div>
         <div v-if="isAddCard">
-            <AddCard @close="isAddCard=false" />
+            <AddCard v-bind:listId="data.id" @close="isAddCard=false" />
         </div>
         <div v-else>
             <a class="add-card-btn" href="" @click.prevent="isAddCard=true">
@@ -16,11 +19,10 @@
 
 <script>
 import AddCard from './AddCard.vue'
+import CardItem from './CardItem.vue'
 
 export default {
-    components: {
-        AddCard
-    },
+    components: { AddCard, CardItem },
     data() {
         return {
             isAddCard: false
