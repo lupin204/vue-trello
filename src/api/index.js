@@ -37,6 +37,9 @@ const board = {
         return request('post', '/boards', { title })
     },
     // Edit board  /  curl -X PUT localhost:3000/boards/1 -H 'Authorization: Bearer token' -d "title=string&bgColor=string"
+    update(id, payload) {
+        return request('put', `/boards/${id}`, payload)
+    },
     // Delete board  /  curl -X DELETE localhost:3000/boards/1 -H 'Authorization: Bearer token'"
     destroy(id) {
         return request('delete', `/boards/${id}`)

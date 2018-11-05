@@ -6,6 +6,13 @@
         </div>
         <ul class="menu-list">
             <li><a href="" v-on:click.prevent="onDeleteBoard">Delete Board</a></li>
+            <li>Change Background</li>
+            <div class="color-picker">
+                <a href="" data-rgb="rgb(0,121,191)" v-on:click.prevent="onChangeTheme"></a>
+                <a href="" data-rgb="rgb(210,144,52)" v-on:click.prevent="onChangeTheme"></a>
+                <a href="" data-rgb="rgb(81,152,57)" v-on:click.prevent="onChangeTheme"></a>
+                <a href="" data-rgb="rgb(176,70,50)" v-on:click.prevent="onChangeTheme"></a>
+            </div>
         </ul>
     </div>
 </template>
@@ -19,12 +26,20 @@ export default {
             board: 'board'
         })
     },
+    mounted() {
+        // Array.from() 유사배열
+        Array.from(this.$el.querySelectorAll('.color-picker a')).forEach(elem => {
+            elem.style.backgroundColor = elem.dataset.rgb     // "rgb(0,121,191)"
+        })
+    },
     methods: {
         ...mapMutations([
-            'SET_IS_SHOW_BOARD_SETTINGS'
+            'SET_IS_SHOW_BOARD_SETTINGS',
+            'SET_THEME'
         ]),
         ...mapActions([
-            'DELETE_BOARD'
+            'DELETE_BOARD',
+            'UPDATE_BOARD'
         ]),
         onClose() {
             this.SET_IS_SHOW_BOARD_SETTINGS(false)
@@ -34,6 +49,14 @@ export default {
             this.DELETE_BOARD({id: this.board.id})
                 .then(() => this.SET_IS_SHOW_BOARD_SETTINGS(false))
                 .then(() => this.$router.push('/'))
+        },
+        onChangeTheme(el) {
+            const id = this.board.id
+            const bgColor = el.target.dataset.rgb
+            this.UPDATE_BOARD({ id, bgColor })
+                .then(() => this.SET_THEME(bgColor))
+            
+            
         }
     }
 }
@@ -97,8 +120,9 @@ export default {
 }
 .color-picker a {
     display: inline-block;
-    width: 49%;
+    width: 45%;
     height: 100px;
     border-radius: 8px;
+    margin: 3px;
 }
 </style>
