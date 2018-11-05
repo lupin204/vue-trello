@@ -35,9 +35,12 @@ const board = {
     // Add board  /  curl -X POST localhost:3000/boards -H 'Authorization: Bearer token' -d "title=string"
     create(title) {
         return request('post', '/boards', { title })
-    }
+    },
     // Edit board  /  curl -X PUT localhost:3000/boards/1 -H 'Authorization: Bearer token' -d "title=string&bgColor=string"
     // Delete board  /  curl -X DELETE localhost:3000/boards/1 -H 'Authorization: Bearer token'"
+    destroy(id) {
+        return request('delete', `/boards/${id}`)
+    }
 }
 
 // login API
@@ -61,6 +64,9 @@ const card = {
     // Edit card  /  curl -X PUT localhost:3000/cards/1 -H 'Authorization: Bearer token' -d "title=string&description=string&listId=number&pos=number"
     update(id, payload) {
         return request('put', `/cards/${id}`, payload)
+    },
+    destroy(id) {
+        return request('delete', `/cards/${id}`)
     }
 }
 

@@ -4,6 +4,7 @@
             <div class="board">
                 <div class="board-header">
                     <span class="board-title">{{board.title}}</span>
+                    <a class="board-header-btn show-menu" href="" v-on:click.prevent="onShowSettings">... Show Menu</a>
                 </div>
                 <div class="list-section-wrapper">
                     <div class="list-section">
@@ -14,17 +15,19 @@
                 </div>
             </div>
         </div>
+        <BoardSettings v-if="isShowBoardSettings" />
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import List from './List.vue'
+import BoardSettings from './BoardSettings.vue'
 import dragger from '../utils/dragger'
 
 export default {
-    components: { List },
+    components: { List, BoardSettings },
     data() {
         return {
             bid: 0,
@@ -34,23 +37,31 @@ export default {
     },
     computed: {
         ...mapState({
-            board: 'board'
+            board: 'board',
+            isShowBoardSettings: 'isShowBoardSettings'
         })
     },
     created() {
-        this.fetchData()
+        this.fetchData().then(() => {
+            this.SET_THEME(this.board.bgColor)
+        })
+        this.SET_IS_SHOW_BOARD_SETTINGS(false)
     },
     updated() {         // 자식이 모두 mounted() 되는 시점
         this.setCardDraggable()
     },
     methods: {
+        ...mapMutations([
+            'SET_THEME',
+            'SET_IS_SHOW_BOARD_SETTINGS'
+        ]),
         ...mapActions([
             'FETCH_BOARD',
             'UPDATE_CARD'
         ]),
         fetchData() {
             this.loading = true
-            this.FETCH_BOARD({id: this.$route.params.bid})
+            return this.FETCH_BOARD({id: this.$route.params.bid})
                 .then(() => this.loading = false);
         },
         setCardDraggable() {
@@ -82,6 +93,9 @@ export default {
 
                 this.UPDATE_CARD(targetCard)
             })
+        },
+        onShowSettings() {
+            this.SET_IS_SHOW_BOARD_SETTINGS(true)
         }
     }
 }
