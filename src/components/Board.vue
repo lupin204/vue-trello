@@ -21,8 +21,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import List from './List.vue'
-import dragula from 'dragula'
-import 'dragula/dist/dragula.css'
+import dragger from '../utils/dragger'
 
 export default {
     components: { List },
@@ -30,7 +29,7 @@ export default {
         return {
             bid: 0,
             loading: false,
-            dragulaCards: null
+            cardDragger: null
         }
     },
     computed: {
@@ -42,53 +41,7 @@ export default {
         this.fetchData()
     },
     updated() {         // 자식이 모두 mounted() 되는 시점
-        if (this.dragulaCards) this.dragulaCards.destroy()
-
-        this.dragulaCards = dragula([
-            // 유사배열 -> 배열로 변환하여 Array함수(forEach, reduce...) 사용하도록 변환
-            ...Array.from(this.$el.querySelectorAll('.card-list'))
-        ]).on('drop', (el, wrapper, target, siblings) => {
-            const targetCard = {
-                id: parseInt(el.dataset.cardId),
-                pos: 65535
-            }
-
-            let prevCard = null
-            let nextCard = null
-            Array.from(wrapper.querySelectorAll('.card-item'))
-                .forEach((elem, idx, arr) => {
-                    const cardId = parseInt(elem.dataset.cardId)
-                    if (cardId === targetCard.id) {      // 이동하려는 id가 일치하면..
-                        // previous card 셋팅
-                        if (idx > 0) {
-                            prevCard = {
-                                id: parseInt(arr[idx -1].dataset.cardId),
-                                pos: parseInt(arr[idx -1].dataset.cardPos)
-                            }
-                        } else {        // 1번째면 이전 card는 null
-                            prevCard = null
-                        }
-                        // next card 셋팅
-                        if (idx < arr.length -1) {
-                            nextCard = {
-                                id: parseInt(arr[idx +1].dataset.cardId),
-                                pos: parseInt(arr[idx +1].dataset.cardPos)
-                            }
-                        } else {        // 마지막이면 다음 card는 null
-                            nextCard = null
-                        }
-                    }
-                })
-            // 이동하려는 card의 drop위치(이동된위치)가 맨앞에 있는 경우 -> 이동하려는 card의 position 값은 다음 card position값의 절반
-            if (!prevCard && nextCard) targetCard.pos = nextCard.pos / 2
-            // 이동하려는 card의 drop위치(이동된위치)가 맨뒤에 있는 경우 -> 이동하려는 card의 position 값은 이전 card position값의 2배
-            else if (!nextCard && prevCard) targetCard.pos = prevCard.pos * 2
-            // 이동하려는 card의 drop위치(이동된위치)가 중간에 있는 경우 -> 이동하려는 card의 position 값은 이전 card position, 다음 card position 의 사이값
-            else if (prevCard && nextCard) targetCard.pos = (prevCard.pos + nextCard.pos) / 2
-
-            console.log(targetCard)
-            this.UPDATE_CARD(targetCard)
-        })
+        this.setCardDraggable()
     },
     methods: {
         ...mapActions([
@@ -99,6 +52,36 @@ export default {
             this.loading = true
             this.FETCH_BOARD({id: this.$route.params.bid})
                 .then(() => this.loading = false);
+        },
+        setCardDraggable() {
+            if (this.cardDragger) this.cardDragger.destroy()
+
+            // 유사배열 -> 배열로 변환하여 Array함수(forEach, reduce...) 사용하도록 변환
+            let cDraggerContainer = Array.from(this.$el.querySelectorAll('.card-list'))
+            this.cardDragger = dragger.init(cDraggerContainer)
+
+            this.cardDragger.on('drop', (elem, wrapper, target, siblings) => {
+                const targetCard = {
+                    id: parseInt(elem.dataset.cardId),
+                    pos: 65535
+                }
+
+                const { prevCard, nextCard } = dragger.siblings({
+                    elem,
+                    wrapper,
+                    candidates: Array.from(wrapper.querySelectorAll('.card-item')),
+                    type: 'card'
+                })
+
+                // 이동하려는 card의 drop위치(이동된위치)가 맨앞에 있는 경우 -> 이동하려는 card의 position 값은 다음 card position값의 절반
+                if (!prevCard && nextCard) targetCard.pos = nextCard.pos / 2
+                // 이동하려는 card의 drop위치(이동된위치)가 맨뒤에 있는 경우 -> 이동하려는 card의 position 값은 이전 card position값의 2배
+                else if (!nextCard && prevCard) targetCard.pos = prevCard.pos * 2
+                // 이동하려는 card의 drop위치(이동된위치)가 중간에 있는 경우 -> 이동하려는 card의 position 값은 이전 card position, 다음 card position 의 사이값
+                else if (prevCard && nextCard) targetCard.pos = (prevCard.pos + nextCard.pos) / 2
+
+                this.UPDATE_CARD(targetCard)
+            })
         }
     }
 }
