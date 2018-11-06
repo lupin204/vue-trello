@@ -10,6 +10,7 @@ const actions = {
         return api.auth.login(email, password)
             .then(({ accessToken }) => commit('LOGIN', accessToken))
     },
+    // BOARD-----------------------------------------------------------------
     ADD_BOARD (_, { title }) {
         return api.board.create(title).then(data => data.item)
     },
@@ -30,7 +31,16 @@ const actions = {
     DELETE_BOARD (_, {id}) {
         return api.board.destroy(id)
     },
-
+    // LIST-----------------------------------------------------------------
+    ADD_LIST ({ dispatch, state }, { title, boardId, pos }) {
+        return api.list.create({title, boardId, pos})
+            .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
+    },
+    UPDATE_LIST ({ dispatch, state }, {id, title, pos}) {
+        return api.list.update(id, {title, pos})
+            .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
+    },
+    // CARD-----------------------------------------------------------------
     ADD_CARD ({ dispatch, state }, {title, listId, pos}) {
         return api.card.create(title, listId, pos)
             .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))

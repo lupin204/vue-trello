@@ -25,6 +25,14 @@ const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null;
 }
 
+// login API
+const auth = {
+    // Login  /  curl -X POST localhost:3000/login -d 'email=test@test.com&password=123123'
+    login(email, password) {
+        return request('post', '/login', {email, password})
+    }
+}
+
 // boards API
 const board = {
     // GET board list  /  curl localhost:3000/boards -H 'Authorization: Bearer token'
@@ -46,28 +54,37 @@ const board = {
     }
 }
 
-// login API
-const auth = {
-    // Login  /  curl -X POST localhost:3000/login -d 'email=test@test.com&password=123123'
-    login(email, password) {
-        return request('post', '/login', {email, password})
+// list API
+const list = {
+    // Add list  / curl -X POST localhost:3000/lists -H 'Authorization: Bearer token' -d "title=string&boardId=number&pos=number"
+    create(payload) {
+        return request('post', '/lists', payload)
+    },
+    // Edit list  / curl -X PUT localhost:3000/lists/1 -H 'Authorization: Bearer token' -d "title=string&pos=number"
+    update(id, payload) {
+        return request ('put', `/lists/${id}`, payload)
+    },
+    // Delete list  / curl -X DELETE localhost:3000/lists/1 -H 'Authorization: Bearer token'
+    destroy(id) {
+        return request('delete', `/lists/${id}`)
     }
 }
 
 // card API
 const card = {
-    // Get card  /  curl localhost:3000/cards/1 -H 'Authorization: Bearer token'
-    fetch(id) {
-        return request('get', `/cards/${id}`)
-    },
     // Add card  /  curl -X POST localhost:3000/cards -H 'Authorization: Bearer token' -d "title=string&listId=number&pos=number"
     create(title, listId, pos) {
         return request('post', '/cards', {title, listId, pos})
+    },
+    // Get card  /  curl localhost:3000/cards/1 -H 'Authorization: Bearer token'
+    fetch(id) {
+        return request('get', `/cards/${id}`)
     },
     // Edit card  /  curl -X PUT localhost:3000/cards/1 -H 'Authorization: Bearer token' -d "title=string&description=string&listId=number&pos=number"
     update(id, payload) {
         return request('put', `/cards/${id}`, payload)
     },
+    // Delete card  /  curl -X DELETE localhost:3000/cards/1 -H 'Authorization: Bearer token'
     destroy(id) {
         return request('delete', `/cards/${id}`)
     }
@@ -75,7 +92,8 @@ const card = {
 
 export {
     setAuthInHeader,
+    auth,
     board,
-    card,
-    auth
+    list,
+    card
 }

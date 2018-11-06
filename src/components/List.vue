@@ -1,7 +1,9 @@
 <template>
     <div class="list">
         <div class="list-header">
-            <div class="list-header-title">{{data.title}}</div>
+            <input v-if="isEditTitle" class="form-control input-title" type="text"
+            ref="inputTitle" v-model="inputTitle" v-on:blur="onBlurTitle" v-on:keyup.enter="onSubmitTitle">
+            <div v-else class="list-header-title" v-on:click="onClickTitle">{{data.title}}</div>
         </div>
         <div class="card-list">
             <CardItem v-for="card in data.cards" v-bind:key="card.id" v-bind:data="card" />
@@ -18,17 +20,50 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AddCard from './AddCard.vue'
 import CardItem from './CardItem.vue'
 
 export default {
     components: { AddCard, CardItem },
+    props: ['data'],
     data() {
         return {
-            isAddCard: false
+            isAddCard: false,
+            isEditTitle: false,
+            inputTitle: ''
         }
     },
-    props: ['data'],
+    created() {
+        this.inputTitle = this.data.title
+    },
+    methods: {
+        ...mapActions([
+            'UPDATE_LIST'
+        ]),
+        onClickTitle() {
+            this.isEditTitle = true
+            this.$nextTick(() => {
+                this.$refs.inputTitle.focus()
+            })
+        },
+        onBlurTitle() {
+            this.isEditTitle = false
+        },
+        onSubmitTitle() {
+            this.onBlurTitle()
+
+            this.inputTitle = this.inputTitle.trim()
+            if (!this.inputTitle) return
+
+            const id = this.data.id
+            const title = this.inputTitle
+            if (title === this.data.title) return
+
+            this.UPDATE_LIST({id, title})
+
+        }
+    }
 }
 </script>
 
