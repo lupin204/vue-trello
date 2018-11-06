@@ -3,7 +3,9 @@
         <div class="board-wrapper">
             <div class="board">
                 <div class="board-header">
-                    <span class="board-title">{{board.title}}</span>
+                    <input class="form-control" v-if="isEditTitle" type="text" v-model="inputTitle"
+                        ref="inputTitle" v-on:blur="onSubmitTitle" v-on:keyup.enter="onSubmitTitle">
+                    <span v-else class="board-title" v-on:click="onClickTitle" >{{board.title}}</span>
                     <a class="board-header-btn show-menu" href="" v-on:click.prevent="onShowSettings">... Show Menu</a>
                 </div>
                 <div class="list-section-wrapper">
@@ -32,7 +34,9 @@ export default {
         return {
             bid: 0,
             loading: false,
-            cardDragger: null
+            cardDragger: null,          // card 이동 관련 dragula 모듈 객체
+            isEditTitle: false,         // board 타이틀 수정하는 input영역 토글 여부
+            inputTitle: ''
         }
     },
     computed: {
@@ -43,6 +47,7 @@ export default {
     },
     created() {
         this.fetchData().then(() => {
+            this.inputTitle = this.board.title
             this.SET_THEME(this.board.bgColor)
         })
         this.SET_IS_SHOW_BOARD_SETTINGS(false)
@@ -57,12 +62,33 @@ export default {
         ]),
         ...mapActions([
             'FETCH_BOARD',
-            'UPDATE_CARD'
+            'UPDATE_CARD',
+            'UPDATE_BOARD'
         ]),
         fetchData() {
             this.loading = true
             return this.FETCH_BOARD({id: this.$route.params.bid})
                 .then(() => this.loading = false);
+        },
+        onShowSettings() {
+            this.SET_IS_SHOW_BOARD_SETTINGS(true)
+        },
+        onClickTitle() {
+            this.isEditTitle = true
+            // $nextTick() : 약간의 setTimeout 트릭을 제공
+            this.$nextTick(() => this.$refs.inputTitle.focus())
+        },
+        onSubmitTitle() {
+            this.isEditTitle = false
+
+            this.inputTitle = this.inputTitle.trim()
+            if (!this.inputTitle) return
+
+            const id = this.board.id
+            const title = this.inputTitle
+            if (title === this.board.title) return
+
+            this.UPDATE_BOARD({ id, title })
         },
         setCardDraggable() {
             if (this.cardDragger) this.cardDragger.destroy()
@@ -93,9 +119,6 @@ export default {
 
                 this.UPDATE_CARD(targetCard)
             })
-        },
-        onShowSettings() {
-            this.SET_IS_SHOW_BOARD_SETTINGS(true)
         }
     }
 }
