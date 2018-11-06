@@ -1,6 +1,36 @@
-# Vue.js로 Trello 만들기 (Clone Coding)
+# Vue.js 템플릿
 
-- 셋팅
+- Abcde.vue
+  - /src/components/Abcde.vue
+  ```js
+  <template>
+    <div>
+      This is Sample Page
+    </div>
+  </template>
+
+  <script>
+    export default {
+  }
+  </script>
+
+  <style>
+  </style>
+  ```
+
+- 기본 util등 js파일
+  ```js
+  import dragula from 'dragula'
+  import 'dragula/dist/draguls.css'
+
+  const dragger = {
+    
+  }
+
+  export default dragger
+  ```
+
+
   - vue-cli 모듈 설치
   ```sh
   >npm install -g vue-cli

@@ -104,46 +104,52 @@
       - git cherry-pick ef62a1b         (Board.vue)
       - git cherry-pick 73bf920         (List.vue)
   - 카드 생성 1 – 마크업
-    - git checkout -f board/
+    - git checkout -f card/add-ui
     - css 가져오기
       - git cherry-pick 524594f         (AddCard.vue)
   - 카드 생성 2 – API 연동
-    - 
+    - git checkout -f card/add-api
+    - css 가져오기
+      - git cherry-pick 27228df         (Card.vue)
   - 카드 상세 조회 1 – 라우팅
-    - 
+    - git checkout -f card/show-routing
   - 카드 상세 조회 2 – API 연동
-    - 
+    - git checkout -f card/show-api
+    - css 가져오기
+      - git cherry-pick c832d66         (CardItem.vue)
   - 카드 수정 – API 연동
-    - 
+    - git checkout -f card/edit
   - 카드 이동 1 – 로직분석
     - 
   - 카드 이동 2 – 구현
-    - 
+    - git checkout -f card/move
   - 카드 이동 3 – 리팩토링
-    - 
+    - git checkout -f card/move-refactoring
   - 카드 삭제
-    - 
+    - git checkout -f card/del
   - 색상 입히기
-    - 
+    - git checkout -f theme/default
   - 보드 세팅
-    - 
+    - git checkout -f board/settings
+    - css 가져오기
+      - git cherry-pick b64b45a         (BoardSettings.vue)
   - 보드 삭제
-    - 
+    - git checkout -f board/del
 - 추가 요구사항 구현
   - 나머지 요구사항 정리
     - 
   - 보드수정 – 색상 변경
-    - 
+    - git checkout -f theme/edit
   - 보드수정 – 타이틀 변경
-    - 
+    - git checkout -f board/edit
   - 리스트 생성
-    - 
+    - git checkout -f list/add
   - 리스트 수정 – 타이틀 변경
-    - 
+    - git checkout -f list/edit
   - 리스트 이동
-    - 
+    - git checkout -f list/move
   - 리스트 삭제
-    - 
+    - git checkout -f list/del
   - 정리
     - 
   - 학습완료

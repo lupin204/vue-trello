@@ -2,8 +2,8 @@ import dragula from 'dragula'
 import 'dragula/dist/dragula.css'
 
 const dragger = {
-    init(container) {
-        return dragula([...container])
+    init(container, options) {
+        return dragula([...container], options)
     },
     // 현재 위치를 기준으로 이전객체 와 다음객체를 리턴
     // candidate : 배열을 돌 수 있는 후보군
