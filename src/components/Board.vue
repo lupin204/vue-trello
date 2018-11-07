@@ -110,8 +110,12 @@ export default {
                     listId: parseInt(wrapper.dataset.listId),
                     pos: 65535
                 }
+                
 
-                const { prevCard, nextCard } = dragger.siblings({
+                // [ES6-객체비구조화]
+                // const prevCard = dragger.siblings().prev
+                // const nextCard = dragger.siblings().next
+                const { prev: prevCard, next: nextCard } = dragger.siblings({
                     elem,
                     wrapper,
                     candidates: Array.from(wrapper.querySelectorAll('.card-item')),
@@ -124,10 +128,7 @@ export default {
                 else if (!nextCard && prevCard) targetCard.pos = prevCard.pos * 2
                 // 이동하려는 card의 drop위치(이동된위치)가 중간에 있는 경우 -> 이동하려는 card의 position 값은 이전 card position, 다음 card position 의 사이값
                 else if (prevCard && nextCard) targetCard.pos = (prevCard.pos + nextCard.pos) / 2
-
                 this.UPDATE_CARD(targetCard)
-                console.log('move-card')
-                console.log(this.board)
             })
         },
         setListDraggable() {
@@ -147,7 +148,10 @@ export default {
                     pos: 65535
                 }
 
-                const { prevList, nextList } = dragger.siblings({
+                // [ES6-객체비구조화]
+                // const prevList = dragger.siblings().prev
+                // const nextList = dragger.siblings().next
+                const { prev: prevList, next: nextList } = dragger.siblings({
                     elem,
                     wrapper,
                     candidates: Array.from(wrapper.querySelectorAll('.list')),
@@ -160,10 +164,7 @@ export default {
                 else if (!nextList && prevList) targetList.pos = prevList.pos * 2
                 // 이동하려는 list의 drop위치(이동된위치)가 중간에 있는 경우 -> 이동하려는 list의 position 값은 이전 list position, 다음 list position 의 사이값
                 else if (prevList && nextList) targetList.pos = (prevList.pos + nextList.pos) / 2
-
                 this.UPDATE_LIST(targetList)
-                console.log('move-list')
-                console.log(this.board)
             })
         }
     }

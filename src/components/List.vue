@@ -6,11 +6,11 @@
             <div v-else class="list-header-title" v-on:click="onClickTitle">{{data.title}}</div>
             <a class="delete-list-btn" href="" v-on:click.prevent="onDeleteList">&times;</a>
         </div>
-        <div class="card-list">
-            <CardItem v-for="card in data.cards" v-bind:key="card.id" v-bind:data="card" />
+        <div class="card-list" v-bind:data-list-id="data.id">
+            <CardItem v-for="card in data.cards" v-bind:key="`${card.id}`" v-bind:data="card" />
         </div>
         <div v-if="isAddCard">
-            <AddCard v-bind:listId="data.id" @close="isAddCard=false" />
+            <AddCard v-bind:list-id="data.id" @close="isAddCard=false" />
         </div>
         <div v-else>
             <a class="add-card-btn" href="" @click.prevent="isAddCard=true">
@@ -109,6 +109,7 @@ export default {
 .card-list {
   flex: 1 1 auto;
   overflow-y: scroll;
+  min-height: 10px;
 }
 .empty-card-item   {
   height: 10px;

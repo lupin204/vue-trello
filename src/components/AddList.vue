@@ -31,7 +31,6 @@ export default{
             this.$nextTick(() => this.$refs.inputTitle.focus())
         },
         onSubmitTitle() {
-            console.log('enter')
             this.inputTitle = this.inputTitle.trim()
             if (!this.inputTitle) return this.restoreTitle()
 

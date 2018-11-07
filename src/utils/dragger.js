@@ -18,7 +18,7 @@ const dragger = {
     siblings({elem, wrapper, candidates, type}) {
 
         // cardId || listId
-        const curId = elem.dataset[type + 'Id']     // target card(list)'s id
+        const curId = parseInt(elem.dataset[type + 'Id'])     // target card(list)'s id
         let prev = null
         let next = null
 
