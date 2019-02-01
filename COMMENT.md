@@ -43,6 +43,7 @@
   - vue-router
   - axios
   - dragula   (drag n drop lib.)
+  - vuex
 
 - axios
   - axios는 CORS(Cross-Origin Resource Sharing) 에 대하여 
