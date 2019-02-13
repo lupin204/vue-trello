@@ -122,7 +122,7 @@
   - $attrs
   - $children
   - $createElement
-  - $el
+  - $el : 마운팅 된 컴포넌트의 DOM 엘레먼트(root DOM)
   - $listeners
   - $options
   - $parent

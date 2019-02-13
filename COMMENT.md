@@ -69,7 +69,7 @@
       'isAddBoard'
     ])
     ```
-  - 변이  -  mutation  -  mapMutations  (동적 변이)
+  - 변이  -  mutation  -  mapMutations  (동적 변이) --> 동기처리(state관리)
     ```js
     // 기본컨셉
     this.$store.commit('SET_IS_ADD_BOARD', true)
@@ -79,7 +79,7 @@
     ])
     this.SET_IS_ADD_BOARD(false)
     ```
-  - 액션  -  action  -  mapActionss  (비동기 로직)
+  - 액션  -  action  -  mapActionss  (비동기 로직) --> 비동기처리(setTimeout, http통신)
     ```js
     // 기본컨셉
     this.$store.dispatch('ADD_BOARD', {title: this.input})    // (action함수, {payload})

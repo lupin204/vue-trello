@@ -1,12 +1,14 @@
 const state = {
-    token: null,
-    isAddBoard: false,      // Home Component (AddBoard 모달창 활성화여부)
-    boards: [],             // 보드목록
-    board: {},
+    // accessToken: null,
+    boardList: [],             // 보드목록
+    board: {
+        lists: []
+    },
     card: {},
-    bodyColor: '#ffffff',
+    isAddBoard: false,      // Home Component (AddBoard 모달창 활성화여부)
+    isShowBoardMenu: false,
     navbarColor: '#026aa7',
-    isShowBoardSettings: false
+    bodyColor: 'rgb(255,255,255)'
 }
 
 export default state

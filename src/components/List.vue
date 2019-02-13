@@ -1,74 +1,78 @@
 <template>
-    <div class="list" v-bind:data-list-id="data.id" v-bind:data-list-pos="data.pos">
-        <div class="list-header">
-            <input v-if="isEditTitle" class="form-control input-title" type="text"
-            ref="inputTitle" v-model="inputTitle" v-on:blur="onBlurTitle" v-on:keyup.enter="onSubmitTitle">
-            <div v-else class="list-header-title" v-on:click="onClickTitle">{{data.title}}</div>
-            <a class="delete-list-btn" href="" v-on:click.prevent="onDeleteList">&times;</a>
-        </div>
-        <div class="card-list" v-bind:data-list-id="data.id">
-            <CardItem v-for="card in data.cards" v-bind:key="`${card.id}`" v-bind:data="card" />
-        </div>
-        <div v-if="isAddCard">
-            <AddCard v-bind:list-id="data.id" @close="isAddCard=false" />
-        </div>
-        <div v-else>
-            <a class="add-card-btn" href="" @click.prevent="isAddCard=true">
-                &plus; Add a card..
-            </a>
-        </div>
+  <div class="list" :data-list-id="list.id" :data-list-pos="list.pos">
+    <div class="list-header">
+      <input v-if="isEditTitle" class="form-control input-title" type="text"
+      ref="inputTitle" v-model="inputTitle" @blur="onSubmitTitle" @keyup.enter="onSubmitTitle">
+      <div v-else class="list-header-title" v-on:click="onClickTitle">{{list.title}}</div>
+      <a class="delete-list-btn" href="" v-on:click.prevent="onDeleteList">&times;</a>
     </div>
+    <div class="card-list" :data-list-id="list.id">
+      <div v-show="!list.cards.length" class="empty-card-item"></div>
+      <card-item v-for="card in list.cards" :key="`${list.id}-${card.pos}`" :card="card" :boardId="list.boardId" />
+    </div>
+    <div v-if="isAddCard">
+      <add-card :listId="list.id" :pos="lastCardPos" @close="isAddCard=false" />
+    </div>
+    <a v-else class="add-card-btn" href="" @click.prevent="isAddCard=true">
+      &plus; Add a card..
+    </a>
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import AddCard from './AddCard.vue'
 import CardItem from './CardItem.vue'
+import { card } from '../api'
 
 export default {
-    components: { AddCard, CardItem },
-    props: ['data'],
-    data() {
-        return {
-            isAddCard: false,
-            isEditTitle: false,
-            inputTitle: ''
-        }
-    },
-    created() {
-        this.inputTitle = this.data.title
-    },
-    methods: {
-        ...mapActions([
-            'UPDATE_LIST',
-            'DELETE_LIST'
-        ]),
-        onClickTitle() {
-            this.isEditTitle = true
-            this.$nextTick(() => {
-                this.$refs.inputTitle.focus()
-            })
-        },
-        onBlurTitle() {
-            this.isEditTitle = false
-        },
-        onSubmitTitle() {
-            this.onBlurTitle()
-
-            this.inputTitle = this.inputTitle.trim()
-            if (!this.inputTitle) return
-
-            const id = this.data.id
-            const title = this.inputTitle
-            if (title === this.data.title) return
-
-            this.UPDATE_LIST({id, title})
-        },
-        onDeleteList() {
-            if (!window.confirm(`Delete ${this.data} list?`)) return
-            this.DELTEE_LIST({id: this.data.id})
-        }
+  components: { AddCard, CardItem },
+  props: ['list'],
+  data() {
+    return {
+      isAddCard: false,
+      isEditTitle: false,
+      inputTitle: ''
     }
+  },
+  created() {
+    this.inputTitle = this.list.title
+  },
+  computed: {
+    lastCardPos() {
+      const lastCard = this.list.cards[this.list.cards.length - 1]
+      let pos = 65535
+      if (lastCard) pos = lastCard.pos + pos
+      return pos
+    }
+  },
+  methods: {
+    ...mapActions([
+      'UPDATE_LIST',
+      'DELETE_LIST'
+    ]),
+    onClickTitle() {
+      this.isEditTitle = true
+      this.$nextTick(_ => {
+        this.$refs.inputTitle.focus()
+      })
+    },
+    onSubmitTitle() {
+      this.inputTitle = this.inputTitle.trim()
+      if (!this.inputTitle) return 
+      const id = this.list.id
+      const title = this.inputTitle
+
+      if (title === this.list.title) return this.isEditTitle = false
+
+      this.UPDATE_LIST({ id, title })
+        .then(_=> (this.isEditTitle = false))
+    },
+    onDeleteList() {
+      if (!window.confirm(`Delete ${this.list.title} list?`)) return
+      this.DELETE_LIST({ id: this.list.id })
+    }
+  }
 }
 </script>
 
@@ -109,7 +113,6 @@ export default {
 .card-list {
   flex: 1 1 auto;
   overflow-y: scroll;
-  min-height: 10px;
 }
 .empty-card-item   {
   height: 10px;

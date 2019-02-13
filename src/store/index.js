@@ -19,6 +19,11 @@ const store1 = new Vuex.Store({
 })
 */
 
+/*
+App.vue --(dispatch)--> actions --(commit)--> mutations --(change)--> state
+             ㄴ------ Vuex ---------------------------------------------
+*/
+
 const store = new Vuex.Store({
     state,
     getters,
@@ -26,7 +31,7 @@ const store = new Vuex.Store({
     actions
 })
 
-const { token } = localStorage
-store.commit('LOGIN', token)
+const { accessToken } = localStorage
+store.commit('LOGIN', { accessToken })
 
 export default store

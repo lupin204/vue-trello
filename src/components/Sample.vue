@@ -1,13 +1,28 @@
 <template>
-    <div>
-        This is Sample Page
-    </div>
+  <div>This is Sample Page</div>
 </template>
 
 <script>
-export default {
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
-}
+export default {
+  computed: {
+    ...mapState({
+      test: 'test'
+    }),
+    ...mapGetters([
+      'TEST'
+    ]),
+  },
+  methods: {
+    ...mapMutations([
+      'SET_TEST'
+    ]),
+    ...mapActions([
+      'FETCH_TEST'
+    ])
+  }
+};
 </script>
 
 <style>
