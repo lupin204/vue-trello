@@ -49,6 +49,7 @@ export default {
       if (!window.confirm(`Delete ${this.board.title} Board? `)) return
       this.DELETE_BOARD(this.board.id)
         .then(_ => this.$router.push("/"))
+        .finally(_ => this.SET_IS_SHOW_BOARD_MENU(false))
     },
     onClickChangeColor(el) {
       const id = this.board.id

@@ -46,7 +46,7 @@ export default {
       'UPDATE_CARD'
     ]),
     onClickClose() {
-      this.$router.push(`/board/${this.boardI}`)
+      this.$router.push(`/board/${this.boardId}`)
     },
     onBlurTitle() {
       this.toggleTitle = !this.toggleTitle

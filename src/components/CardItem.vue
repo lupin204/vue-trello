@@ -14,7 +14,8 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   props: [
     'card',
-    'boardId'
+    'boardId',
+    'listId'
   ],
   methods: {
     ...mapActions([

@@ -35,7 +35,6 @@ export default {
   updated() {
     // board.bgcolor 값이 있으면 셋팅 없으면 디폴트(#ddd)
     Array.from(document.querySelectorAll('.board-item')).forEach(el => {
-      console.log(el.dataset)
       el.style.backgroundColor = el.dataset.bgcolor || '#ddd'
     })
   },

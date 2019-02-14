@@ -4,8 +4,8 @@
       <router-link to="/">MyPass</router-link>
     </div>
     <div class="header-auth">
-      <a v-if="isAuthenicated" href="" @click.prevent="logout">Logout</a>
-      <router-link v-else to="/login">Login</router-link>
+      <!--/* <a v-if="isAuthenicated" href="" @click.prevent="logout">Logout</a>
+      <router-link v-else to="/login">Login</router-link> */-->
     </div>
   </nav>
 </template>
@@ -19,9 +19,9 @@ export default {
       navbarColor: 'navbarColor',
       bodyColor: 'bodyColor'
     }),
-    isAuthenicated() {
-      return this.$store.getters.isAuthenticated
-    },
+    // isAuthenicated() {
+    //   return this.$store.getters.isAuthenticated
+    // },
   },
   watch: {
     bodyColor: 'updateTheme'
@@ -39,10 +39,10 @@ export default {
       // if (!container) return
       // container.style.backgroundColor = this.bodyColor
     },
-    logout() {
-      this.$store.commit('LOGOUT')
-      this.$router.push('/login')
-    }
+    // logout() {
+    //   this.$store.commit('LOGOUT')
+    //   this.$router.push('/login')
+    // }
   }
 };
 </script>

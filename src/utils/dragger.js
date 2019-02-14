@@ -18,12 +18,12 @@ const dragger = {
     siblings({elem, wrapper, candidates, type}) {
 
         // cardId || listId
-        const curId = parseInt(elem.dataset[type + 'Id'])     // target card(list)'s id
+        const curId = elem.dataset[type + 'Id']     // target card(list)'s id
         let prev = null
         let next = null
 
         candidates.forEach((elem, idx, arr) => {
-            const id = parseInt(elem.dataset[type+'Id'])
+            const id = elem.dataset[type+'Id']
             if (id === curId) {      // 이동하려는 id가 일치하면..
                 // previous card(list) 셋팅
                 if (idx > 0) {

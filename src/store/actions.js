@@ -1,4 +1,5 @@
-import { auth, board, list, card } from '../api'
+import { //auth, 
+  board, list, card } from '../api'
 
 /*
 ACTION_NAME ({context객체}, {payloads})
@@ -7,10 +8,10 @@ dispatch() 함수  -->  vuex의 action 실행한다
 commit() 함수  -->  vuex의 mutation 실행한다
 */
 const actions = {
-  LOGIN ({ commit }, { email, password }) {
-    return auth.login(email, password)
-      .then(({ accessToken }) => commit('LOGIN', { accessToken }))
-  },
+  // LOGIN ({ commit }, { email, password }) {
+  //   return auth.login(email, password)
+  //     .then(({ accessToken }) => commit('LOGIN', { accessToken }))
+  // },
   // BOARD-----------------------------------------------------------------
   FETCH_BOARD_LIST ({ commit }) {
     return board.fetchAll()
@@ -33,7 +34,7 @@ const actions = {
   },
   // LIST-----------------------------------------------------------------
   ADD_LIST ({ state, dispatch }, { title, boardId, pos }) {
-      return list.create(boardId, { title, pos, boardId })
+      return list.create({ title, pos, boardId })
           .then(_ => dispatch('FETCH_BOARD', state.board.id))
   },
   UPDATE_LIST ({ state, dispatch }, { id, title, pos }) {

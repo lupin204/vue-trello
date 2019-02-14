@@ -1,28 +1,43 @@
 <template>
-  <div class="add-card">
-    <form id="add-card-form" @submit.prevent="onSubmitNewCard">
-      <input class="form-control" type="text" v-model="inputCardTitle" ref="inputCardTitle" @blur="$emit('close')">
-      <button class="btn btn-success" type="submit" form="add-card-form" :disabled="invalidInput">Add Card</button>
-      <a class="cancel-add-btn" href="" @click.prevent="$emit('close')">&times;</a>
-    </form>
-  </div>
+  <modal>
+    <div slot="header">
+      <h2>
+        Create new card
+        <a href="" class="modal-default-button" @click.prevent="onCloseAddCard">&times;</a>
+      </h2>
+    </div>
+    <div slot="body">
+      <form id="add-card-form" @submit.prevent="onSubmitNewCard" >
+        <label>Key</label><input class="form-control" type="text" v-model="inputCardTitle" ref="inputCardTitle">
+        <label>Value</label><input class="form-control" type="text"  v-model="test" ref="test">
+      </form>
+    </div>
+    <div slot="footer">
+      <button class="btn" :class="{'btn-success' : isValidInput}" type="submit" form="add-card-form"
+      :disabled="!isValidInput">Create Card </button>
+    </div>
+  </modal>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import Modal from './Modal.vue'
 
 export default {
+  components: { Modal },
   // 부모 Component로부터 listId를 받아온다
   // List.vue(부모) 에서 AddCard Component 등록할때 listId를 v-bind로 넘긴다
-  props: [ 'pos', 'listId' ],
+  props: [ 'pos', 'listId', 'boardId'],
   data() {
     return {
-      inputCardTitle: ''
+      inputCardTitle: '',
+      isValidInput: false,
+      test: ''
     }
   },
-  computed: {
-    invalidInput() {
-      return !this.inputCardTitle.trim()
+  watch: {
+    inputCardTitle(val) {
+      this.isValidInput = !!val.trim().length
     }
   },
   mounted() {
@@ -31,15 +46,27 @@ export default {
   },
   methods: {
     ...mapActions([
-      'ADD_CARD'
+      'ADD_CARD',
+      "FETCH_BOARD"
     ]),
     onSubmitNewCard() {
-      debugger
-      if (this.invalidInput) return
-      const { inputCardTitle, pos, listId } = this         // const inputTitle = this.inputTitle;  const listId = this.listId;
+      // if (this.invalidInput) return
+      if (!this.inputCardTitle.trim()) return
+
       //const pos = this.newCardPos()
+
+      // const inputTitle = this.inputTitle;  const listId = this.listId;
+      const { inputCardTitle, pos, listId } = this
       this.ADD_CARD({title: inputCardTitle, listId, pos})
-        .finally(_ => this.inputCardTitle = '')
+        //.then(_ => this.$router.push(`/board/${boardId}`))
+        .finally(_ => {
+          // this.SET_IS_ADD_CARD(false)
+          this.$emit('close')
+        })
+    },
+    onCloseAddCard() {
+      this.$emit('close')
+      // this.SET_IS_ADD_CARD(false)
     }
     // newCardPos() {
     //     const curList = this.$store.state.board.lists.filter(elem => elem.id === this.listId)[0]
